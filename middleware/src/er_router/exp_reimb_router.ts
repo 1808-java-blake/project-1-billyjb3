@@ -4,7 +4,7 @@ import * as dao from './exp_reimb_dao';
 
 export const router = express.Router();
 
-router.get('', [
+router.get('/users', [
     async (req, resp: Response) => {
         try
         {
@@ -51,6 +51,52 @@ router.post("/register", async (req, resp) => {
         {
             resp.sendStatus(401);
         }
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(500);
+    }
+});
+
+router.post("/new-ticket", async (req, resp) => {
+    try
+    {
+        const id = await dao.createTicket(req.body);
+        if(id)
+        {
+            resp.sendStatus(200);
+        }
+        else
+        {
+            resp.sendStatus(401);
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(500);
+    }
+});
+
+router.get("/reimbursements", async (req, resp) => {
+    try
+    {
+        const reimbursements = await dao.getReimbursements();
+        return resp.json(reimbursements);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(500);
+    }
+});
+
+router.get("/reimbursements-byuser", async (req, resp) => {
+    try
+    {   
+        const reimbursements = await dao.getReimbursementByUser(req.body);
+        return resp.json(reimbursements);
     }
     catch(err)
     {

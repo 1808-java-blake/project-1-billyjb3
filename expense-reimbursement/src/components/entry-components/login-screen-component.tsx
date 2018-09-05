@@ -90,19 +90,25 @@ export class LoginScreen extends React.Component<RouteComponentProps<{}>, IState
             }
             else if(resp.status === 200)
             {
-                const header = document.getElementById("pageHeader");
-                if(header != null)
-                {
-                    header.style.display = "block";
-                }
                 return resp.json();
             }
             throw Error("Username or Password were incorrect");
         })
         .then(resp => {
             localStorage.setItem("user", JSON.stringify(resp))
-            alert(localStorage.getItem("user"));
-            this.props.history.push("/employee-home");
+            const userRole = resp.user_role_id;
+            if(userRole)
+            {
+                if(userRole === 1)
+                {
+                    this.props.history.push("/employee-home");
+                }
+                else if(userRole === 2)
+                {
+                    this.props.history.push("/manager-home");
+                }
+            }
+            
         })
         .catch(err => {
             console.log(err);

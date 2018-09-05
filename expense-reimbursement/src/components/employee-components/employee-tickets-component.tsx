@@ -8,13 +8,15 @@ export class EmployeeTickets extends React.Component
 {
     public render()
     {
+        const headers = ["ID", "Amount", "Date Submitted", "Date Resolved", "Resolved By", "Type", "Status"];
+
         return(
             <div className="pageContainer">
                 <EmployeeHeader/>
                 <div className="pageBackground"></div>
                 <div className="pageContent">
                     <NewTicket/>
-                    <TicketWindow/>
+                    <TicketWindow headers={headers}/>
                 </div>
             </div>
         )

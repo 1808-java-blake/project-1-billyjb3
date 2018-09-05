@@ -1,32 +1,40 @@
 .ticketsDiv{
-    position: relative;
-    width: 90%;
-    height: 32em;
-    top: 4em;
-    margin: auto;
-    background-color: transparent;
-    color: #808080;
-    opacity: .85;
-  }
+  position: relative;
+  width: 90%;
+  height: 32em;
+  top: 4em;
+  margin: auto;
+  background-color: transparent;
+  color: #808080;
+  opacity: .85;
+}
   
-  .ticketTable{
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: solid 1px black;
-  }
-  
-  th{
-    background-color: #151515;
-  }
-  td{
-    text-align: center;
-    border: solid 1px #151515;
-  }
-  
-  tr:nth-child(even){
-    background-color: #151825;
-  }
-  tr:nth-child(odd){
-    background-color: #152025;
-  }
+.ticketTable{
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: solid 1px black;
+}
+
+tr{
+  cursor: pointer;
+}
+
+tr:hover{
+  background-color: #152050 !important;
+}
+
+th{
+  background-color: #151515;
+}
+td{
+  text-align: center;
+  border: solid 1px #151515;
+}
+
+tr:nth-child(even){
+  background-color: #151825;
+}
+tr:nth-child(odd){
+  background-color: #152025;
+}

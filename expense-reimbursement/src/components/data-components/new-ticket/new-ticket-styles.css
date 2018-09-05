@@ -10,7 +10,7 @@
 .inputGrid{
     width: 80%;
     display: inline-grid;
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 20% 20% 40% 20%;
 }
 
 .inputBox{
@@ -22,4 +22,14 @@
     background-color: #252525;
     width: 100%;
     border: none;
+}
+
+.button{
+    width: 60%;
+    height: 50%;
+    position: relative;
+    top: 50%;
+    background-color: #151515;
+    border: 2px solid #808080;
+    color: #808080;
 }

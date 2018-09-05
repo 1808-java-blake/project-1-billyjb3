@@ -4,12 +4,15 @@
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+      "coverage/lcov-report/*.js",
+      "src/**/**/**/*.tsx",
+      "src/**/**/*.tsx",
+      "src/**/*.tsx",
+      "src/*.tsx"
     ]
   },
   "rules": {
     "ordered-imports": false,
-    "object-literal-sort-keys": false,
     "jsx-self-close": false,
     "jsx-no-lambda": false,
     "no-console": false,
