@@ -1,20 +1,22 @@
 import * as React from 'react';
-import {TicketTD} from './ticket-td';
+//import {TicketTD} from './ticket-td';
 
 interface IProps
 {
-    data: string[]
+    data: {};
+    rowClicked: (id: number) => void;
 }
 
 export const TicketDataRow: React.StatelessComponent<IProps> = (props) =>
 {
-    const {data} = props;
-    let columns = [];
-    for(let i = 0; i < data.length; i++)
-    {
-        columns.push(<TicketTD text={data[i]}/>);
-    }
+    const {data, rowClicked} = props;
+    let columns:any = [];
+    Object.keys(data).map((key) => {
+        console.log("key: "+key)
+        columns.push(<td>{data[key]}</td>);
+    })
+
     return (
-        <tr>{columns}</tr>
+        <tr onClick={() => rowClicked(data["id"])}>{columns}</tr>
     )
 }

@@ -7,7 +7,7 @@ import * as ticketActions from './new-ticket-action';
 export interface IState
 {
     amount: number,
-    reimbType: string,
+    reimbType: number,
     description: string
 }
 
@@ -19,11 +19,16 @@ export interface IState
 // }
 
 
-export class NewTicket extends React.Component
+export class NewTicket extends React.Component<{},IState>
 {
     constructor(props: any)
     {
         super(props);
+        this.state = {
+            amount: 0,
+            reimbType: 1,
+            description: ""
+        }
     }
 
     public render()
@@ -35,42 +40,96 @@ export class NewTicket extends React.Component
                 <div className="inputGrid mt1">
                     <div className="inputBox">
                         <p>Type:</p>
-                        <select className="ticketInput">
-                            <option>Lodging</option>
-                            <option>Travel</option>
-                            <option>Food</option>
-                            <option>Other</option>
+                        <select id="typeSelect" className="ticketInput" onChange={this.typeChanged}>
+                            <option value="1">Lodging</option>
+                            <option value="2">Travel</option>
+                            <option value="3">Food</option>
+                            <option value="4">Other</option>
                         </select><hr/>
                     </div>
                     <div className="inputBox">
                         <p>Amount:</p>
-                        <input className="ticketInput" type="text"  /><hr/>
+                        <input className="ticketInput" type="text" onChange={this.amountChanged}/><hr/>
                     </div>
                     <div className="inputBox">
                         <p>Description:</p>
-                        <input type="text" className="ticketInput" /><hr/>
+                        <input type="text" className="ticketInput" onChange={this.descriptionChanged}/><hr/>
                     </div>
                     <div className="inputBox">
-                        <button className="button">Submit</button>
+                        <button className="button" onClick={this.newTicket}>Submit</button>
                     </div>
                 </div>
             </div>
         )
     }
 
-    public amountChanged(e: any)
+    public newTicket = () =>
     {
-        // this.props.updateAmount(e.target.value);
+        const userString = localStorage.getItem("user");
+        alert(userString);
+        if(userString)
+        {
+            const user = JSON.parse(userString);
+            const userid = user.ers_users_id;
+            alert(userid);
+            const ticket = {
+                amount: this.state.amount,
+                description: this.state.description,
+                author: userid,
+                type: this.state.reimbType
+            }
+            fetch("http://localhost:3001/er_router/new-ticket", {
+                body: JSON.stringify(ticket),
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "POST"
+            })
+            .then(resp => {
+                if(resp.status === 200)
+                {
+                    alert("Ticket Submitted");
+                    // const selector = document.getElementById("typeSelect") as HTMLSelectElement;
+                    // if(selector)
+                    // {
+                    //     selector.selectedIndex = 0;
+                    // }
+                    
+                }
+                else
+                {
+                    alert("Unable to create new ticket");
+                }
+            })
+        }
     }
 
-    public typeChanged(e: any)
+    public amountChanged = (e: any) =>
     {
-        // this.props.updateReimbType(e.target.value);
+        const value = e.target.value;
+        this.setState({
+            ...this.state,
+            amount: value
+        })
     }
 
-    public descriptionChanged(e: any)
+    public typeChanged = (e: any) =>
     {
-        // this.props.updateDescription(e.targer.value);
+        const value = e.target.options[e.target.selectedIndex].value;
+        this.setState({
+            ...this.state,
+            reimbType: value
+        })
+    }
+
+    public descriptionChanged = (e: any) =>
+    {
+        const value = e.target.value;
+        this.setState({
+            ...this.state,
+            description: value
+        })
     }
 }
 

@@ -4,7 +4,7 @@ import {IState} from './new-ticket-component';
 const initialState: IState = {
     amount: 0,
     description: "",
-    reimbType: ""
+    reimbType: 1
 }
 
 export const newTicketReducer = (state = initialState, action: any) =>

@@ -92,11 +92,11 @@ router.get("/reimbursements", async (req, resp) => {
     }
 });
 
-router.get("/reimbursements-byuser", async (req, resp) => {
+router.post("/user-reimbursements", async (req, resp) => {
     try
     {   
-        const reimbursements = await dao.getReimbursementByUser(req.body);
-        return resp.json(reimbursements);
+        const reimbursements = await dao.getReimbursementByUser(req.body.userId);
+        return resp.json(reimbursements.rows);
     }
     catch(err)
     {

@@ -1,12 +1,12 @@
 .ticketsDiv{
   position: relative;
+  text-align: center;
   width: 90%;
   height: 32em;
   top: 4em;
   margin: auto;
   background-color: transparent;
-  color: #808080;
-  opacity: .85;
+  color: #DDD;
 }
   
 .ticketTable{
@@ -22,6 +22,7 @@ tr{
 
 tr:hover{
   background-color: #152050 !important;
+  color: white;
 }
 
 th{
@@ -30,6 +31,7 @@ th{
 td{
   text-align: center;
   border: solid 1px #151515;
+  color: #AAA;
 }
 
 tr:nth-child(even){
