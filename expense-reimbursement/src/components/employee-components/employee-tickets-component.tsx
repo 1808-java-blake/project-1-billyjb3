@@ -4,19 +4,19 @@ import {EmployeeHeader} from '../header-components/employee-header-component';
 import {TicketWindow} from '../data-components/ticket-window/ticket-window-component';
 import {NewTicket} from '../data-components/new-ticket/new-ticket-component';
 
-interface EmployeeData
-{
-    id: number;
-    amount: number;
-    submitted: string;
-    resolved: string;
-    resolvedBy: string;
-    type: string;
-    status: string;
-}
+// interface EmployeeData
+// {
+//     id: number;
+//     amount: number;
+//     submitted: string;
+//     resolved: string;
+//     resolvedBy: string;
+//     type: string;
+//     status: string;
+// }
 interface IState
 {
-    data: EmployeeData[];
+    data: any[];
 }
 
 export class EmployeeTickets extends React.Component<any, IState>
@@ -24,6 +24,9 @@ export class EmployeeTickets extends React.Component<any, IState>
     constructor(props: any)
     {
         super(props);
+        this.state = {
+            data: [ ]
+        }
         this.setData();
     }
 
@@ -50,6 +53,43 @@ export class EmployeeTickets extends React.Component<any, IState>
 
     public setData()
     {
+        const userString = localStorage.getItem("user");
+        if(userString)
+        {
+            const user = JSON.parse(userString);
+            alert(user.ers_users_id);
+            fetch("http://localhost:3001/er_router/user-reimbursements", {
+            body: userString,
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+            })
+            .then(resp => {
+                if(resp.status === 200)
+                {
+                    return resp.json();
+                }
+                else
+                {
+                    alert("could not retrieve your reimbursements!");
+                }
+                throw Error("Username or Password were incorrect");
+            })
+            .then(data => {
+                console.log(data);
+                console.log(data.length);
+                this.setState({
+                    data
+                })
+            })
 
+        }
+        else
+        {
+            alert("no user logged In!!");
+        }
+        
     }
 }
