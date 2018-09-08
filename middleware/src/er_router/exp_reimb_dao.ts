@@ -2,6 +2,8 @@ import { connectionPool} from "../connection-util";
 const schema = "expense_reimbursement";
 const users = schema + ".ers_users";
 const reimb = schema + ".ers_reimbursement";
+const types = schema + ".ers_reimbursement_type";
+const status = schema + ".ers_reimbursement_status";
 
 export async function getusers()
 {
@@ -92,7 +94,16 @@ export async function getReimbursementByUser(userId)
     const client = await connectionPool.connect();
     try
     {
-        const resp = await client.query("SELECT * FROM "+reimb+" WHERE reimb_author = $1 ORDER BY reimb_submitted", [userId]);
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        WHERE r.reimb_author = $1
+        ORDER BY r.reimb_submitted DESC`
+        const resp = await client.query(query, [userId]);
         return resp;
     }
     finally

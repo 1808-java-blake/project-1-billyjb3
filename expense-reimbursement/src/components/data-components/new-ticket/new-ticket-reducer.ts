@@ -1,7 +1,7 @@
 import * as types from './new-ticket-action';
-import {IState} from './new-ticket-component';
+import {NewTicketState} from './new-ticket-component';
 
-const initialState: IState = {
+const initialState: NewTicketState = {
     amount: 0,
     description: "",
     reimbType: 1

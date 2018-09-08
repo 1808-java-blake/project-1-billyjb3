@@ -1,5 +1,4 @@
 import * as React from 'react';
-//import {TicketTD} from './ticket-td';
 
 interface IProps
 {
@@ -7,16 +6,24 @@ interface IProps
     rowClicked: (id: number) => void;
 }
 
-export const TicketDataRow: React.StatelessComponent<IProps> = (props) =>
+export class TicketDataRow extends React.Component<IProps, any>
 {
-    const {data, rowClicked} = props;
-    let columns:any = [];
-    Object.keys(data).map((key) => {
-        console.log("key: "+key)
-        columns.push(<td>{data[key]}</td>);
-    })
+    constructor(props: IProps)
+    {
+        super(props);
+    }
 
-    return (
-        <tr onClick={() => rowClicked(data["id"])}>{columns}</tr>
-    )
+    public render()
+    {
+        let columns:any = [];
+        Object.keys(this.props.data).map((key) => {
+            console.log("key: "+key)
+            columns.push(<td>{this.props.data[key]}</td>);
+        })
+
+        return (
+            <tr className="dataRow" onClick={() => this.props.rowClicked(this.props.data["id"])}>{columns}</tr>
+        )
+    }
+    
 }

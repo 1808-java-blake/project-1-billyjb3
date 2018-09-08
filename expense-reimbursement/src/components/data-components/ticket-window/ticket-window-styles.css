@@ -16,13 +16,10 @@
   border: solid 1px black;
 }
 
-tr{
-  cursor: pointer;
-}
-
-tr:hover{
+.dataRow:hover{
   background-color: #152050 !important;
   color: white;
+  cursor: pointer;
 }
 
 th{
