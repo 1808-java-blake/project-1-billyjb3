@@ -34,3 +34,9 @@
 label{
   margin-right: 1em;
 }
+
+.sectionTitle{
+  width: 90%;
+  text-align: center;
+  margin: auto;
+}

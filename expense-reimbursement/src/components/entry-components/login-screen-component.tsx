@@ -35,16 +35,14 @@ export class LoginScreen extends React.Component<RouteComponentProps<{}>, IState
                         <p className="loginLabels">Username:</p>
                         <input className="loginInput" type="text" onChange={this.usernameChanged}/><hr/>
                         <p className="loginLabels">Password:</p>
-                        <input className="loginInput" type="text" onChange={this.passwordChanged}/><hr/>
+                        <input className="loginInput" type="password" onChange={this.passwordChanged}/><hr/>
                         <button onClick={this.login} className="entryButton mt7">Login</button>
                     </div>
                     <div className="optionsGroup">
                         <Link to="/register" className="options">
                             <p className="options">register</p>
                         </Link><br/>
-                        <Link to="/forgot" className="options">
-                            <p className="options">forgot username or password</p>
-                        </Link>
+                        
                     </div>
                 </div>
             </div>

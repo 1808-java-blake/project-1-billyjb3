@@ -33,9 +33,9 @@ export class ManagerTickets extends React.Component<any, ManagerState>
                 <ManagerHeader/>
                 <div className="pageBackground"></div>
                 <div className="pageContent">
-                    <br/><h2>Employee Ticket</h2><hr/><br/>
+                    <div className="sectionTitle"><br/><h2>Employee Ticket</h2><hr/><br/></div>
                     <TicketUser data={this.state.selectedTicket} setReimbStatus={this.setStatus}/>
-                    <h2>Tickets</h2><hr/><br/>
+                    <div className="sectionTitle"><h2>Tickets</h2><hr/><br/></div>
                     <select onChange={this.setFilter}>
                         <option value="all">all</option>
                         <option value="pending">pending</option>

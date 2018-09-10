@@ -32,7 +32,8 @@ export class EmployeeTickets extends React.Component<any, IState>
                 <EmployeeHeader/>
                 <div className="pageBackground"></div>
                 <div className="pageContent">
-                    <NewTicket submitTicket={this.submitTicket}/>
+                    <NewTicket submitTicket={this.submitTicket}/><br/><br/>
+                    <div className="sectionTitle"><h2>Tickets</h2><hr/><br/></div>
                     <TicketWindow headers={headers} data={this.state.data} rowClicked={this.rowClicked}/>
                 </div>
             </div>
@@ -116,6 +117,10 @@ export class EmployeeTickets extends React.Component<any, IState>
                         type: data[i].reimb_type,
                         description: data[i].reimb_description,
                         status: data[i].reimb_status
+                    }
+                    if(reimb.resolved)
+                    {
+                        reimb.resolved = reimb.resolved.substring(0, 10);
                     }
                     formated.push(reimb);
                 }
