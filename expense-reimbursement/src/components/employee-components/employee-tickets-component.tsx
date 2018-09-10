@@ -110,7 +110,7 @@ export class EmployeeTickets extends React.Component<any, IState>
                 {
                     const reimb = {
                         id: data[i].reimb_id,
-                        amount: data[i].reimb_amount,
+                        amount: "$"+data[i].reimb_amount,
                         submitted: data[i].reimb_submitted.substring(0, 10),
                         resolved: data[i].reimb_resolved,
                         resolver: data[i].resolver_firstname + " " + data[i].resolver_lastname,

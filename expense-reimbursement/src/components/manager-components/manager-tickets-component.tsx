@@ -60,7 +60,6 @@ export class ManagerTickets extends React.Component<any, ManagerState>
         {
             const user = JSON.parse(userString);
             const userId = user["ers_users_id"];
-            alert(userId);
             const body = {ticketId: ticketId, statusId: statusId, managerId: userId};
             fetch("http://localhost:3001/er_router/set-reimbursement-status", {
                 body: JSON.stringify(body),
