@@ -83,7 +83,7 @@ router.get("/reimbursements", async (req, resp) => {
     try
     {
         const reimbursements = await dao.getReimbursements();
-        return resp.json(reimbursements);
+        return resp.json(reimbursements.rows);
     }
     catch(err)
     {
@@ -103,4 +103,69 @@ router.post("/user-reimbursements", async (req, resp) => {
         console.log(err);
         resp.sendStatus(500);
     }
+});
+
+router.post("/reimbursement-by-id", async (req, resp) => {
+    try
+    {
+        const reimbursement = await dao.getReimbursementById(req.body.reimb_id);
+        return resp.json(reimbursement.rows);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(500);
+    }
+});
+
+router.post("/set-reimbursement-status", async (req, resp) => {
+    try
+    {
+        await dao.setReimbursementStatus(req.body.ticketId, req.body.statusId, req.body.managerId);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(500);
+    }
 })
+
+router.get("/pending-reimbursements", async (req, resp) => {
+    try
+    {
+        const reimbursements = await dao.getPendingReimbursements();
+        return resp.json(reimbursements.rows);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(err);
+    }
+})
+
+router.get("/approved-reimbursements", async (req, resp) => {
+    try
+    {
+        const reimbursements = await dao.getApprovedReimbursements();
+        return resp.json(reimbursements.rows);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(err);
+    }
+})
+
+router.get("/denied-reimbursements", async (req, resp) => {
+    try
+    {
+        const reimbursements = await dao.getDeniedReimbursements();
+        return resp.json(reimbursements.rows);
+    }
+    catch(err)
+    {
+        console.log(err);
+        resp.sendStatus(err);
+    }
+})
+

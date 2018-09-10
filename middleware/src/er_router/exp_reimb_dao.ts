@@ -80,7 +80,15 @@ export async function getReimbursements()
     const client = await connectionPool.connect();
     try
     {
-        const resp = await client.query("SELECT * FROM "+reimb+" ORDER BY reimb_submitted ASC");
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        ORDER BY r.reimb_submitted DESC`
+        const resp = await client.query(query);
         return resp;
     }
     finally
@@ -101,9 +109,9 @@ export async function getReimbursementByUser(userId)
         LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
         INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
         INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
-        WHERE r.reimb_author = $1
-        ORDER BY r.reimb_submitted DESC`
-        const resp = await client.query(query, [userId]);
+        WHERE r.reimb_author = ${userId}
+        ORDER BY r.reimb_submitted DESC`;
+        const resp = await client.query(query);
         return resp;
     }
     finally
@@ -112,4 +120,110 @@ export async function getReimbursementByUser(userId)
     }
 }
 
+export async function getReimbursementById(reimbId)
+{
+    const client = await connectionPool.connect();
+    try
+    {
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        WHERE r.reimb_id = ${reimbId}
+        ORDER BY r.reimb_submitted DESC`;
+        const resp = await client.query(query);
+        return resp;
+    }
+    finally
+    {
+        client.release();
+    }
+}
+
+export async function setReimbursementStatus(reimbId, statusId, managerId)
+{
+    const client = await connectionPool.connect();
+    try
+    {
+        const query = `UPDATE ${reimb} SET reimb_status_id = ${statusId}, reimb_resolver = ${managerId} WHERE reimb_id = ${reimbId}`;
+        const resp = await client.query(query);
+        return resp;
+    }
+    finally
+    {
+        client.release();
+    }   
+}
+
+export async function getPendingReimbursements()
+{
+    const client = await connectionPool.connect();
+    try
+    {
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        WHERE r.reimb_status_id = 3
+        ORDER BY r.reimb_submitted DESC`;
+        const resp = await client.query(query);
+        return resp;
+    }
+    finally
+    {
+        client.release();
+    }
+}
+
+export async function getApprovedReimbursements()
+{
+    const client = await connectionPool.connect();
+    try
+    {
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        WHERE r.reimb_status_id = 1
+        ORDER BY r.reimb_submitted DESC`;
+        const resp = await client.query(query);
+        return resp;
+    }
+    finally
+    {
+        client.release();
+    }
+}
+
+export async function getDeniedReimbursements()
+{
+    const client = await connectionPool.connect();
+    try
+    {
+        const query = `SELECT r.reimb_id, r.reimb_amount, r.reimb_submitted, r.reimb_resolved, r.reimb_description, u.user_first_name as author_firstname, 
+        u.user_last_name as author_lastname, uu.user_first_name as resolver_firstname, uu.user_last_name as resolver_lastname, s.reimb_status, rt.reimb_type
+        FROM ${reimb} as r
+        INNER JOIN ${users} as u ON r.reimb_author = u.ers_users_id
+        LEFT JOIN ${users} as uu ON r.reimb_resolver = uu.ers_users_id 
+        INNER JOIN ${status} AS s ON r.reimb_status_id = s.reimb_status_id
+        INNER JOIN ${types} AS rt ON r.reimb_type_id = rt.reimb_type_id
+        WHERE r.reimb_status_id = 2
+        ORDER BY r.reimb_submitted DESC`;
+        const resp = await client.query(query);
+        return resp;
+    }
+    finally
+    {
+        client.release();
+    }
+}
 

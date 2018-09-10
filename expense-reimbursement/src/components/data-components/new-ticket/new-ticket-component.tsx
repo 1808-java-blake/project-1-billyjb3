@@ -29,7 +29,6 @@ export class NewTicket extends React.Component<IProps ,NewTicketState>
 
     public render()
     {
-        // const {amount, reimbType, description} = this.props;
         return(
             <div className="ticketInputDiv pt2">
                 <h2>Submit New Ticket</h2><hr/>

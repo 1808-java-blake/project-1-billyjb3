@@ -30,7 +30,6 @@ export class TicketWindow extends React.Component<IProps, any>
 
         return (
             <div className="ticketsDiv">
-                <h2>Tickets</h2><hr/><br/>
                 <table className="ticketTable">
                     <tr>
                         {header}

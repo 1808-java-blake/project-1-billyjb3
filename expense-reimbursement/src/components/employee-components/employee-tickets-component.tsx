@@ -24,7 +24,7 @@ export class EmployeeTickets extends React.Component<any, IState>
 
     public render()
     {
-        const headers = ["ID", "Amount", "Date Submitted", "Date Resolveddd", "Resolved By", "Type", "Description", "Status"];
+        const headers = ["ID", "Amount", "Date Submitted", "Date Resolved", "Resolved By", "Type", "Description", "Status"];
 
         console.log("Employee Tickets this.state.data: "+this.state.data);
         return(
@@ -81,7 +81,6 @@ export class EmployeeTickets extends React.Component<any, IState>
 
     public setData()
     {
-        alert("setData entered");
         const userString = localStorage.getItem("user");
         if(userString)
         {
@@ -123,7 +122,6 @@ export class EmployeeTickets extends React.Component<any, IState>
                 this.setState({
                     data: formated
                 })
-                alert("new state set");
             })
 
         }

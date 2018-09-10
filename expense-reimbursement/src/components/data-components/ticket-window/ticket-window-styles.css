@@ -2,11 +2,13 @@
   position: relative;
   text-align: center;
   width: 90%;
-  height: 32em;
-  top: 4em;
+  height: 40em;
+  /* top: 4em; */
   margin: auto;
   background-color: transparent;
   color: #DDD;
+  overflow-y: scroll;
+  border: solid #151515 4px;
 }
   
 .ticketTable{
@@ -14,6 +16,7 @@
   table-layout: fixed;
   border-collapse: collapse;
   border: solid 1px black;
+  white-space: nowrap;
 }
 
 .dataRow:hover{
@@ -22,13 +25,21 @@
   cursor: pointer;
 }
 
+tr{
+  height: 4em;
+}
+
 th{
   background-color: #151515;
 }
+
 td{
+  padding-left: 3px;
+  padding-right: 3px;
   text-align: center;
   border: solid 1px #151515;
   color: #AAA;
+  overflow: hidden;
 }
 
 tr:nth-child(even){
